@@ -9730,7 +9730,7 @@
         },
         "paymentCondition": {
           "type": "string",
-          "description": "The default payment condition code for for this contact. Available codes are defined inside your HiveCPQ environment."
+          "description": "The default payment condition code for this contact. Available codes are defined inside your HiveCPQ environment."
         }
       },
       "description": "Sales conditions of the contact."
