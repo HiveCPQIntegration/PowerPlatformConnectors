@@ -2,8 +2,8 @@
   "swagger": "2.0",
   "info": {
     "version": "1.0.0",
-    "title": "HiveCPQ Product Configurator",
-    "description": "HiveCPQ is a comprehensive Configure Price Quote (CPQ) solution that empowers sales teams to generate accurate quotes for complex products. Streamline your sales process by seamlessly integrating HiveCPQ to automate workflows, sync data, and optimize your operations using our connector. Maximize efficiency and deliver exceptional sales experiences with HiveCPQ's powerful connector.",
+    "title": "Hive CPQ Product Configurator",
+    "description": "Hive CPQ is a comprehensive Configure Price Quote (CPQ) solution that empowers sales teams to generate accurate quotes for complex products. Streamline your sales process by seamlessly integrating Hive CPQ to automate workflows, sync data, and optimize your operations using our connector. Maximize efficiency and deliver exceptional sales experiences with Hive CPQ's powerful connector.",
     "contact": {
       "name": "HiveCPQ Support",
       "url": "https://hivecpq.com/en/integrations",
@@ -754,7 +754,7 @@
       },
       "delete": {
         "summary": "Delete a distributor contact",
-        "description": "Delete a specific contact of a distributor.",
+        "description": "Delete a specific contact of a distributor",
         "operationId": "DeleteADistributorContact",
         "parameters": [
           {
@@ -1826,7 +1826,7 @@
     "/manufacturers/{manufacturerId}/containers/{name}/versions/{version}/components/bulkUpsert": {
       "post": {
         "summary": "Upsert components in bulk",
-        "description": "Create or update multiple components in master data.",
+        "description": "Create or update 50 components in master data.",
         "operationId": "PostBulkUpsertComponents",
         "parameters": [
           {
@@ -1878,7 +1878,7 @@
     "/manufacturers/{manufacturerId}/containers/{name}/versions/{version}/components/setPrices": {
       "post": {
         "summary": "Upsert component prices in bulk",
-        "description": "Create or update multiple component prices in master data.",
+        "description": "Create or update 50 component prices in master data.",
         "operationId": "PostBulkUpsertComponentPrices",
         "parameters": [
           {
@@ -3093,6 +3093,58 @@
         ]
       }
     },
+    "/manufacturers/{manufacturerId}/containers/{name}/versions/{version}/properties/bulkUpsert": {
+      "post": {
+        "summary": "Upsert properties in bulk",
+        "description": "Create or update 50 properties in master data.",
+        "operationId": "PostBulkUpsertProperties",
+        "parameters": [
+          {
+            "$ref": "#/parameters/pathManufacturerId"
+          },
+          {
+            "$ref": "#/parameters/pathName"
+          },
+          {
+            "$ref": "#/parameters/pathVersion"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/requestPostBulkUpsertProperties"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/responseBulkResults"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/defaultBadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/defaultNotAuthorized"
+          },
+          "403": {
+            "$ref": "#/responses/defaultForbidden"
+          },
+          "404": {
+            "$ref": "#/responses/defaultNotFound"
+          },
+          "500": {
+            "$ref": "#/responses/defaultServerError"
+          }
+        },
+        "tags": [
+          "Property"
+        ]
+      }
+    },
     "/manufacturers/{manufacturerId}/containers/{name}/versions/{version}/properties/{propertyId}": {
       "put": {
         "summary": "Update a property",
@@ -3234,6 +3286,140 @@
         },
         "tags": [
           "Property"
+        ]
+      }
+    },
+    "/manufacturers/{manufacturerId}/containers/{name}/versions/{version}/categories": {
+      "get": {
+        "summary": "Search categories",
+        "description": "Search categories in master data.",
+        "operationId": "SearchCategoriesOfAManufacturer",
+        "parameters": [
+          {
+            "$ref": "#/parameters/pathManufacturerId"
+          },
+          {
+            "$ref": "#/parameters/pathName"
+          },
+          {
+            "$ref": "#/parameters/pathVersion"
+          },
+          {
+            "in": "query",
+            "name": "code",
+            "x-ms-summary": "Code",
+            "description": "Filter categories by code.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "mainCategoryCode",
+            "x-ms-summary": "Main Category Code",
+            "description": "Filter sub-categories by their parents code.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/parameters/queryIdsIn"
+          },
+          {
+            "$ref": "#/parameters/queryIntegratedSystemName"
+          },
+          {
+            "$ref": "#/parameters/queryIntegratedSystemIdsIn"
+          },
+          {
+            "$ref": "#/parameters/queryLanguage"
+          },
+          {
+            "$ref": "#/parameters/queryPageIn"
+          },
+          {
+            "$ref": "#/parameters/queryPageSize"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/responseGetCategories"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/defaultBadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/defaultNotAuthorized"
+          },
+          "403": {
+            "$ref": "#/responses/defaultForbidden"
+          },
+          "404": {
+            "$ref": "#/responses/defaultNotFound"
+          },
+          "500": {
+            "$ref": "#/responses/defaultServerError"
+          }
+        },
+        "tags": [
+          "Category"
+        ]
+      }
+    },
+    "/manufacturers/{manufacturerId}/containers/{name}/versions/{version}/categories/bulkUpsert": {
+      "post": {
+        "summary": "Upsert categories in bulk",
+        "description": "Create or update 50 categories in master data.",
+        "operationId": "PostBulkUpsertCategories",
+        "parameters": [
+          {
+            "$ref": "#/parameters/pathManufacturerId"
+          },
+          {
+            "$ref": "#/parameters/pathName"
+          },
+          {
+            "$ref": "#/parameters/pathVersion"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/requestPostBulkUpsertCategories"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/responseBulkResults"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/defaultBadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/defaultNotAuthorized"
+          },
+          "403": {
+            "$ref": "#/responses/defaultForbidden"
+          },
+          "404": {
+            "$ref": "#/responses/defaultNotFound"
+          },
+          "500": {
+            "$ref": "#/responses/defaultServerError"
+          }
+        },
+        "tags": [
+          "Category"
         ]
       }
     },
@@ -4013,6 +4199,58 @@
         ]
       }
     },
+    "/manufacturers/{manufacturerId}/containers/{name}/versions/{version}/features/bulkUpsert": {
+      "post": {
+        "summary": "Upsert features in bulk",
+        "description": "Create or update 50 features in master data.",
+        "operationId": "PostBulkUpsertFeatures",
+        "parameters": [
+          {
+            "$ref": "#/parameters/pathManufacturerId"
+          },
+          {
+            "$ref": "#/parameters/pathName"
+          },
+          {
+            "$ref": "#/parameters/pathVersion"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/requestPostBulkUpsertFeatures"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/responseBulkResults"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/defaultBadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/defaultNotAuthorized"
+          },
+          "403": {
+            "$ref": "#/responses/defaultForbidden"
+          },
+          "404": {
+            "$ref": "#/responses/defaultNotFound"
+          },
+          "500": {
+            "$ref": "#/responses/defaultServerError"
+          }
+        },
+        "tags": [
+          "Feature"
+        ]
+      }
+    },
     "/manufacturers/{manufacturerId}/containers/{name}/versions/{version}/units": {
       "get": {
         "summary": "Search units",
@@ -4107,6 +4345,58 @@
         "responses": {
           "201": {
             "$ref": "#/responses/defaultCreated"
+          },
+          "400": {
+            "$ref": "#/responses/defaultBadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/defaultNotAuthorized"
+          },
+          "403": {
+            "$ref": "#/responses/defaultForbidden"
+          },
+          "404": {
+            "$ref": "#/responses/defaultNotFound"
+          },
+          "500": {
+            "$ref": "#/responses/defaultServerError"
+          }
+        },
+        "tags": [
+          "Unit"
+        ]
+      }
+    },
+    "/manufacturers/{manufacturerId}/containers/{name}/versions/{version}/units/bulkUpsert": {
+      "post": {
+        "summary": "Upsert units in bulk",
+        "description": "Create or update 50 units in master data.",
+        "operationId": "PostBulkUpsertUnits",
+        "parameters": [
+          {
+            "$ref": "#/parameters/pathManufacturerId"
+          },
+          {
+            "$ref": "#/parameters/pathName"
+          },
+          {
+            "$ref": "#/parameters/pathVersion"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/requestPostBulkUpsertUnits"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/responseBulkResults"
+            }
           },
           "400": {
             "$ref": "#/responses/defaultBadRequest"
@@ -4315,6 +4605,106 @@
         },
         "tags": [
           "Unit"
+        ]
+      }
+    },
+    "/manufacturers/{manufacturerId}/containers/{name}/versions/{version}/configurators": {
+      "get": {
+        "summary": "Search configurators",
+        "description": "Search configurators in version.",
+        "operationId": "GetTheConfiguratorsOfAManufacturer",
+        "parameters": [
+          {
+            "$ref": "#/parameters/pathManufacturerId"
+          },
+          {
+            "$ref": "#/parameters/pathName"
+          },
+          {
+            "$ref": "#/parameters/pathVersion"
+          },
+          {
+            "in": "query",
+            "name": "code",
+            "x-ms-summary": "Configurator Code",
+            "description": "Filter on the code of the configurators.",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/responseGetConfigurators"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/defaultBadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/defaultNotAuthorized"
+          },
+          "403": {
+            "$ref": "#/responses/defaultForbidden"
+          },
+          "404": {
+            "$ref": "#/responses/defaultNotFound"
+          },
+          "500": {
+            "$ref": "#/responses/defaultServerError"
+          }
+        },
+        "tags": [
+          "Configurator"
+        ]
+      }
+    },
+    "/manufacturers/{manufacturerId}/containers/{name}/versions/{version}/configurators/{configuratorId}": {
+      "delete": {
+        "summary": "Delete a configurator",
+        "description": "Delete a specific configurator from a version.",
+        "operationId": "DeleteConfiguratorFromVersion",
+        "parameters": [
+          {
+            "$ref": "#/parameters/pathManufacturerId"
+          },
+          {
+            "$ref": "#/parameters/pathName"
+          },
+          {
+            "$ref": "#/parameters/pathVersion"
+          },
+          {
+            "in": "path",
+            "name": "configuratorId",
+            "x-ms-summary": "Configurator ID",
+            "description": "ID of the configurator you want to access.",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/responses/defaultNoContent"
+          },
+          "400": {
+            "$ref": "#/responses/defaultBadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/defaultNotAuthorized"
+          },
+          "403": {
+            "$ref": "#/responses/defaultForbidden"
+          },
+          "404": {
+            "$ref": "#/responses/defaultNotFound"
+          },
+          "500": {
+            "$ref": "#/responses/defaultServerError"
+          }
+        },
+        "tags": [
+          "Configurator"
         ]
       }
     },
@@ -5614,6 +6004,82 @@
         ]
       }
     },
+    "/manufacturers/{manufacturerId}/projectSegments/{projectSegmentId}/cancelToQuotation": {
+      "post": {
+        "summary": "Cancel the order process to quotation",
+        "description": "Cancels the order process and move a segment back to quotation. Project segment must be in step 1 or step 2 in order to be moved to quotation.",
+        "operationId": "CancelTheOrderProcessToQuotation",
+        "parameters": [
+          {
+            "$ref": "#/parameters/pathManufacturerId"
+          },
+          {
+            "$ref": "#/parameters/pathProjectSegmentId"
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/responses/defaultNoContent"
+          },
+          "400": {
+            "$ref": "#/responses/defaultBadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/defaultNotAuthorized"
+          },
+          "403": {
+            "$ref": "#/responses/defaultForbidden"
+          },
+          "404": {
+            "$ref": "#/responses/defaultNotFound"
+          },
+          "500": {
+            "$ref": "#/responses/defaultServerError"
+          }
+        },
+        "tags": [
+          "ProjectSegment"
+        ]
+      }
+    },
+    "/manufacturers/{manufacturerId}/projectSegments/{projectSegmentId}/cancelToStep1": {
+      "post": {
+        "summary": "Cancel the order process to step 1",
+        "description": "Cancels the order process and move a segment back to step 1. Project segment must be in step 2 in order to be moved to step 1.",
+        "operationId": "CancelTheOrderProcessToStep1",
+        "parameters": [
+          {
+            "$ref": "#/parameters/pathManufacturerId"
+          },
+          {
+            "$ref": "#/parameters/pathProjectSegmentId"
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/responses/defaultNoContent"
+          },
+          "400": {
+            "$ref": "#/responses/defaultBadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/defaultNotAuthorized"
+          },
+          "403": {
+            "$ref": "#/responses/defaultForbidden"
+          },
+          "404": {
+            "$ref": "#/responses/defaultNotFound"
+          },
+          "500": {
+            "$ref": "#/responses/defaultServerError"
+          }
+        },
+        "tags": [
+          "ProjectSegment"
+        ]
+      }
+    },
     "/manufacturers/{manufacturerId}/projectSegments/{projectSegmentId}/cancelToStep2": {
       "post": {
         "summary": "Cancel order process of a project segment",
@@ -6489,7 +6955,8 @@
               "COMPANY",
               "COMPANY_DEFAULT_ADDRESS",
               "COMPONENT",
-              "CATEGORY",
+              "MAIN_CATEGORY",
+              "SUB_CATEGORY",
               "PROPERTY",
               "DISTRIBUTOR_CONTACT",
               "DISTRIBUTOR_ACCOUNT",
@@ -7351,6 +7818,13 @@
             "type": "string"
           },
           {
+            "in": "query",
+            "name": "default",
+            "x-ms-summary": "Is Default Price Catalog",
+            "description": "Find the default price catalog.",
+            "type": "boolean"
+          },
+          {
             "$ref": "#/parameters/queryPageIn"
           },
           {
@@ -7588,7 +8062,7 @@
             "type": "string",
             "enum": [
               "REQUEST_WARRANTY",
-              "DEIVERY_FAILURE",
+              "DELIVERY_FAILURE",
               "TECHNICAL_FAULT"
             ]
           },
@@ -8838,12 +9312,46 @@
       },
       "description": "A link to a project."
     },
-    "componentExtensions": {
+    "componentExtensionsDeprecatedV1": {
       "type": "object",
       "properties": {
+        "feature": {
+          "$ref": "#/definitions/requestPostSetComponentFeatures"
+        },
+        "category": {
+          "type": "object",
+          "x-ms-visibility": "important",
+          "properties": {
+            "integratedSystemName": {
+              "type": "string",
+              "description": "Optional. Only target sub-categories linked to an integrated system."
+            },
+            "categories": {
+              "type": "array",
+              "description": "A set of sub-category codes. To clear existing links specify an empty list.",
+              "items": {
+                "$ref": "#/definitions/requestPostSetComponentCategory"
+              }
+            }
+          },
+          "required": [
+            "categories"
+          ]
+        },
+        "property": {
+          "$ref": "#/definitions/requestPostSetPropertyValues"
+        },
+        "quantity": {
+          "$ref": "#/definitions/requestPostSetComponentQuantities"
+        },
+        "tooltip": {
+          "$ref": "#/definitions/requestPutComponentTooltip"
+        },
         "features": {
           "type": "array",
-          "description": "A collection of feature codes.",
+          "x-ms-summary": "features (Deprecated)",
+          "x-ms-visibility": "advanced",
+          "description": "(Deprecated) A collection of feature codes.",
           "items": {
             "type": "string",
             "description": "A unique feature code."
@@ -8851,20 +9359,30 @@
         },
         "propertyValues": {
           "type": "array",
-          "description": "The collection of property values which need to be set.",
+          "x-ms-summary": "propertyValues (Deprecated)",
+          "x-ms-visibility": "advanced",
+          "description": "(Deprecated) The collection of property values which need to be set.",
           "items": {
             "$ref": "#/definitions/requestPostSetPropertyValue"
           }
         },
+        "categories": {
+          "type": "array",
+          "x-ms-summary": "categories (Deprecated)",
+          "x-ms-visibility": "advanced",
+          "description": "(Deprecated) A collection of categories which need to be set.",
+          "items": {
+            "$ref": "#/definitions/requestPostSetComponentCategory"
+          }
+        },
         "quantities": {
           "type": "array",
-          "description": "The collection of component quantities which need to be set.",
+          "x-ms-summary": "quantities (Deprecated)",
+          "x-ms-visibility": "advanced",
+          "description": "(Deprecated) The collection of component quantities which need to be set.",
           "items": {
             "$ref": "#/definitions/requestComponentQuantity"
           }
-        },
-        "tooltip": {
-          "$ref": "#/definitions/requestPutComponentTooltip"
         }
       },
       "description": "Manage relations between a component and other Hive resources. Not including the extensions or underlying properties will not cause existing relations to be removed, this needs to be specified explicitly with an empty list."
@@ -8989,7 +9507,7 @@
           "description": "The textual representation of the node value."
         },
         "quantity": {
-          "type": "integer",
+          "type": "number",
           "description": "The quantity of items represented by this node used to calculate the total node price."
         },
         "optional": {
@@ -9165,6 +9683,14 @@
         "shippingManagerContactId": {
           "type": "string",
           "description": "ID of a contact who functions as shipping support manager."
+        },
+        "companyGroups": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "A company group."
+          },
+          "description": "List of company groups."
         }
       },
       "description": "The advanced info about a company."
@@ -9352,6 +9878,8 @@
     "enumProjectSegmentStatus": {
       "type": "string",
       "enum": [
+        "DRAFT",
+        "ACTIVE",
         "RUNNING",
         "SOLD",
         "LOST",
@@ -9369,7 +9897,7 @@
     },
     "enumComponentPropertyType": {
       "type": "string",
-      "description": "Type of the property",
+      "description": "Type of the property.",
       "enum": [
         "DECIMAL",
         "NUMBER",
@@ -9433,7 +9961,8 @@
         "COMPANY_DEFAULT_ADDRESS",
         "CONFIGURATION",
         "COMPONENT",
-        "CATEGORY",
+        "MAIN_CATEGORY",
+        "SUB_CATEGORY",
         "PROPERTY",
         "DISTRIBUTOR_CONTACT",
         "DISTRIBUTOR_ACCOUNT",
@@ -9749,10 +10278,15 @@
     },
     "requestPostSetComponentFeatures": {
       "type": "object",
+      "x-ms-visibility": "important",
       "properties": {
+        "integratedSystemName": {
+          "type": "string",
+          "description": "Optional. Only target features linked to an integrated system."
+        },
         "featureCodes": {
           "type": "array",
-          "description": "A collection of feature codes.",
+          "description": "A set of feature codes. To clear existing links specify an empty list.",
           "items": {
             "type": "string",
             "description": "A unique feature code."
@@ -9794,6 +10328,46 @@
         "names"
       ]
     },
+    "requestPostBulkUpsertUnits": {
+      "type": "object",
+      "properties": {
+        "integratedSystemName": {
+          "type": "string",
+          "description": "Optional integrated system name used to create integrated system links for your units."
+        },
+        "units": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "itemId": {
+                "type": "string",
+                "description": "A custom identifier of this item that must be unique within the entire request. This is not the unit ID."
+              },
+              "code": {
+                "type": "string",
+                "description": "The unique unit code."
+              },
+              "names": {
+                "$ref": "#/definitions/requestTranslations"
+              },
+              "integratedSystemId": {
+                "type": "string",
+                "description": "Optional integrated system ID used to create an integrated system link for this unit."
+              }
+            },
+            "required": [
+              "itemId",
+              "code",
+              "names"
+            ]
+          }
+        }
+      },
+      "required": [
+        "units"
+      ]
+    },
     "requestPostSetPropertyValue": {
       "type": "object",
       "properties": {
@@ -9821,12 +10395,38 @@
         "code"
       ]
     },
-    "requestPostSetPropertyValues": {
+    "requestPostSetComponentCategory": {
       "type": "object",
       "properties": {
+        "mainCategoryCode": {
+          "type": "string",
+          "description": "Code of the main category from which sub-categories will be linked to the component."
+        },
+        "subCategoryCodes": {
+          "type": "array",
+          "description": "A collection of sub-category codes to be linked to the component.",
+          "items": {
+            "type": "string",
+            "description": "A sub-category code"
+          }
+        }
+      },
+      "required": [
+        "mainCategoryCode",
+        "subCategoryCodes"
+      ]
+    },
+    "requestPostSetPropertyValues": {
+      "type": "object",
+      "x-ms-visibility": "important",
+      "properties": {
+        "integratedSystemName": {
+          "type": "string",
+          "description": "Optional. Only target properties linked to an integrated system."
+        },
         "propertyValues": {
           "type": "array",
-          "description": "The collection of property values which need to be set.",
+          "description": "A set of property values. To clear existing values specify an empty list.",
           "items": {
             "$ref": "#/definitions/requestPostSetPropertyValue"
           }
@@ -9844,15 +10444,15 @@
           "description": "Code of the unit to use for this component quantity."
         },
         "minimum": {
-          "type": "integer",
+          "type": "number",
           "description": "The minimum quantity to use for this component quantity."
         },
         "maximum": {
-          "type": "integer",
+          "type": "number",
           "description": "The optional maximum quantity to use for this component quantity."
         },
         "step": {
-          "type": "integer",
+          "type": "number",
           "description": "The step value to use for each incremental step for this component quantity."
         }
       },
@@ -9864,13 +10464,18 @@
     },
     "requestPostSetComponentQuantities": {
       "type": "object",
+      "x-ms-visibility": "important",
       "properties": {
+        "integratedSystemName": {
+          "type": "string",
+          "description": "Optional. Only target units linked to an integrated system."
+        },
         "quantities": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/requestComponentQuantity"
           },
-          "description": "The collection of quantities which need to be set."
+          "description": "A set of quantities. To clear existing values specify an empty list."
         }
       },
       "required": [
@@ -9963,7 +10568,7 @@
                 "description": "The group to which your component belongs."
               },
               "extensions": {
-                "$ref": "#/definitions/componentExtensions"
+                "$ref": "#/definitions/componentExtensionsDeprecatedV1"
               },
               "integratedSystemId": {
                 "type": "string",
@@ -10065,7 +10670,7 @@
           "description": "The group to which your component belongs."
         },
         "extensions": {
-          "$ref": "#/definitions/componentExtensions"
+          "$ref": "#/definitions/componentExtensionsDeprecatedV1"
         },
         "integratedSystemLink": {
           "$ref": "#/definitions/requestBasicIntegratedSystemLink"
@@ -10106,7 +10711,7 @@
           "description": "The group to which your component belongs."
         },
         "extensions": {
-          "$ref": "#/definitions/componentExtensions"
+          "$ref": "#/definitions/componentExtensionsDeprecatedV1"
         }
       },
       "required": [
@@ -10116,6 +10721,7 @@
     },
     "requestPutComponentTooltip": {
       "type": "object",
+      "x-ms-visibility": "important",
       "properties": {
         "enabled": {
           "type": "boolean",
@@ -10166,7 +10772,6 @@
         },
         "info": {
           "type": "string",
-          "maxLength": 250,
           "description": "General info about the property."
         },
         "integratedSystemLink": {
@@ -10183,17 +10788,106 @@
       "properties": {
         "info": {
           "type": "string",
-          "maxLength": 250,
           "description": "General info about the property."
         }
       }
+    },
+    "requestPostBulkUpsertProperties": {
+      "type": "object",
+      "properties": {
+        "integratedSystemName": {
+          "type": "string",
+          "description": "Optional integrated system name used to create integrated system links for your properties."
+        },
+        "properties": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "itemId": {
+                "type": "string",
+                "description": "A custom identifier of this item that must be unique within the entire request. This is not the property ID."
+              },
+              "code": {
+                "type": "string",
+                "description": "Unique code for the property."
+              },
+              "type": {
+                "$ref": "#/definitions/enumComponentPropertyType"
+              },
+              "arrayType": {
+                "$ref": "#/definitions/enumComponentPropertyArrayType"
+              },
+              "info": {
+                "type": "string",
+                "description": "General info about the property."
+              },
+              "integratedSystemId": {
+                "type": "string",
+                "description": "Optional integrated system ID used to create an integrated system link for this property."
+              }
+            },
+            "required": [
+              "itemId",
+              "code",
+              "type"
+            ]
+          }
+        }
+      },
+      "required": [
+        "properties"
+      ]
+    },
+    "requestPostBulkUpsertCategories": {
+      "type": "object",
+      "properties": {
+        "integratedSystemName": {
+          "type": "string",
+          "description": "Optional integrated system name used to create integrated system links for your categories."
+        },
+        "categories": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "itemId": {
+                "type": "string",
+                "description": "A custom identifier of this item. It is not the category ID."
+              },
+              "code": {
+                "type": "string",
+                "description": "Code of the category."
+              },
+              "mainCategoryCode": {
+                "type": "string",
+                "description": "Code of the parent category. This turns your new category into a sub-category."
+              },
+              "names": {
+                "$ref": "#/definitions/requestTranslations"
+              },
+              "integratedSystemId": {
+                "type": "string",
+                "description": "Optional integrated system ID used to create an integrated system link for this category."
+              }
+            },
+            "required": [
+              "itemId",
+              "code",
+              "names"
+            ]
+          }
+        }
+      },
+      "required": [
+        "categories"
+      ]
     },
     "requestPostFeature": {
       "type": "object",
       "properties": {
         "code": {
           "type": "string",
-          "maxLength": 200,
           "description": "Unique code for the feature."
         },
         "descriptions": {
@@ -10201,7 +10895,6 @@
         },
         "serialSearchFunction": {
           "type": "string",
-          "maxLength": 100,
           "description": "A JavaScript function which determines the visibility in the product store."
         },
         "integratedSystemLink": {
@@ -10221,12 +10914,55 @@
         },
         "serialSearchFunction": {
           "type": "string",
-          "maxLength": 100,
           "description": "A JavaScript function which determines the visibility in the product store."
         }
       },
       "required": [
         "descriptions"
+      ]
+    },
+    "requestPostBulkUpsertFeatures": {
+      "type": "object",
+      "properties": {
+        "integratedSystemName": {
+          "type": "string",
+          "description": "Optional integrated system name used to create integrated system links for your features."
+        },
+        "features": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "itemId": {
+                "type": "string",
+                "description": "A custom identifier of this item that must be unique within the entire request. This is not the feature ID."
+              },
+              "code": {
+                "type": "string",
+                "description": "Unique code for the feature."
+              },
+              "descriptions": {
+                "$ref": "#/definitions/requestTranslations"
+              },
+              "serialSearchFunction": {
+                "type": "string",
+                "description": "A JavaScript function which determines the visibility in the product store."
+              },
+              "integratedSystemId": {
+                "type": "string",
+                "description": "Optional integrated system ID used to create an integrated system link for this feature."
+              }
+            },
+            "required": [
+              "itemId",
+              "code",
+              "descriptions"
+            ]
+          }
+        }
+      },
+      "required": [
+        "features"
       ]
     },
     "requestPostChangeFeatureGroup": {
@@ -12035,6 +12771,11 @@
               "type": "number",
               "format": "float",
               "description": "Purchase price of the node."
+            },
+            "salesPrice": {
+              "type": "number",
+              "format": "float",
+              "description": "Sales price of the node."
             }
           },
           "description": "price"
@@ -12416,15 +13157,15 @@
                 "$ref": "#/definitions/unitLink"
               },
               "minimum": {
-                "type": "integer",
+                "type": "number",
                 "description": "The minimum of this component quantity."
               },
               "maximum": {
-                "type": "integer",
+                "type": "number",
                 "description": "The optional maximum of this component quantity."
               },
               "step": {
-                "type": "integer",
+                "type": "number",
                 "description": "The step for this component quantity."
               },
               "audit": {
@@ -12940,6 +13681,48 @@
         }
       }
     },
+    "responseGetCategories": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "ID of the category."
+              },
+              "code": {
+                "type": "string",
+                "description": "Code of the category."
+              },
+              "name": {
+                "type": "string",
+                "description": "Translated name of the category."
+              },
+              "type": {
+                "type": "string",
+                "description": "Type of category.",
+                "enum": [
+                  "MAIN_CATEGORY",
+                  "SUB_CATEGORY"
+                ]
+              },
+              "audit": {
+                "$ref": "#/definitions/responseAudit"
+              },
+              "externalLinks": {
+                "$ref": "#/definitions/externalLinks"
+              }
+            }
+          }
+        },
+        "total": {
+          "$ref": "#/definitions/responseTotalCount"
+        }
+      }
+    },
     "responseGetFeatureGroups": {
       "type": "object",
       "properties": {
@@ -13026,6 +13809,37 @@
             }
           },
           "description": "A list of units."
+        },
+        "total": {
+          "$ref": "#/definitions/responseTotalCount"
+        }
+      }
+    },
+    "responseGetConfigurators": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "ID of the configurator."
+              },
+              "code": {
+                "type": "string",
+                "description": "Unique code of the configurator."
+              },
+              "name": {
+                "$ref": "#/definitions/responseTranslations"
+              },
+              "externalLinks": {
+                "$ref": "#/definitions/externalLinks"
+              }
+            }
+          },
+          "description": "A list of configurators."
         },
         "total": {
           "$ref": "#/definitions/responseTotalCount"
@@ -13617,6 +14431,19 @@
               },
               "externalLinks": {
                 "$ref": "#/definitions/externalLinks"
+              },
+              "account": {
+                "description": "Distributor account to which the contact belongs.",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "ID of the account."
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the account."
+                  }
+                }
               },
               "audit": {
                 "$ref": "#/definitions/responseAudit"
@@ -14354,6 +15181,11 @@
               "format": "float",
               "description": "List price of the configuration."
             },
+            "salesPrice": {
+              "type": "number",
+              "format": "float",
+              "description": "Sales price of the configuration."
+            },
             "currency": {
               "type": "string",
               "description": "Currency of the configuration in ISO 4217 format."
@@ -14883,7 +15715,13 @@
       "name": "Feature"
     },
     {
+      "name": "Category"
+    },
+    {
       "name": "Unit"
+    },
+    {
+      "name": "Configurator"
     },
     {
       "name": "PriceCatalog"
