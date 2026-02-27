@@ -5,7 +5,7 @@
     "title": "Hive CPQ Product Configurator",
     "description": "Hive CPQ is a comprehensive Configure Price Quote (CPQ) solution that empowers sales teams to generate accurate quotes for complex products. Streamline your sales process by seamlessly integrating Hive CPQ to automate workflows, sync data, and optimize your operations using our connector. Maximize efficiency and deliver exceptional sales experiences with Hive CPQ's powerful connector.",
     "contact": {
-      "name": "HiveCPQ Support",
+      "name": "Hive CPQ Support",
       "url": "https://hivecpq.com/en/integrations",
       "email": "support@hivecpq.com"
     }
@@ -533,7 +533,7 @@
       },
       "delete": {
         "summary": "Delete a default address of a company",
-        "description": "Delete a specific default address of a company",
+        "description": "Delete a specific default address of a company.",
         "operationId": "DeleteASingleDefaultAddressOfACompany",
         "parameters": [
           {
@@ -646,6 +646,52 @@
         "responses": {
           "201": {
             "$ref": "#/responses/defaultCreated"
+          },
+          "400": {
+            "$ref": "#/responses/defaultBadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/defaultNotAuthorized"
+          },
+          "403": {
+            "$ref": "#/responses/defaultForbidden"
+          },
+          "404": {
+            "$ref": "#/responses/defaultNotFound"
+          },
+          "500": {
+            "$ref": "#/responses/defaultServerError"
+          }
+        },
+        "tags": [
+          "Contact"
+        ]
+      }
+    },
+    "/manufacturers/{manufacturerId}/contacts/bulkUpsert": {
+      "post": {
+        "summary": "Upsert contacts in bulk",
+        "description": "Create or update 50 contacts in master data.",
+        "operationId": "PostBulkUpsertContacts",
+        "parameters": [
+          {
+            "$ref": "#/parameters/pathManufacturerId"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/requestPostBulkUpsertContacts"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/responseBulkResults"
+            }
           },
           "400": {
             "$ref": "#/responses/defaultBadRequest"
@@ -1350,6 +1396,49 @@
         ]
       }
     },
+    "/manufacturers/{manufacturerId}/invites/bulkCreate": {
+      "post": {
+        "summary": "Create invites in bulk",
+        "description": "Create 50 invites for contacts to join a company.",
+        "operationId": "BulkCreateInvitesForAManufacturer",
+        "parameters": [
+          {
+            "$ref": "#/parameters/pathManufacturerId"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/requestBulkCreateInvites"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "$ref": "#/responses/defaultCreated"
+          },
+          "400": {
+            "$ref": "#/responses/defaultBadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/defaultNotAuthorized"
+          },
+          "403": {
+            "$ref": "#/responses/defaultForbidden"
+          },
+          "404": {
+            "$ref": "#/responses/defaultNotFound"
+          },
+          "500": {
+            "$ref": "#/responses/defaultServerError"
+          }
+        },
+        "tags": [
+          "Invite"
+        ]
+      }
+    },
     "/manufacturers/{manufacturerId}/invites/{inviteId}/sendInviteEmail": {
       "post": {
         "summary": "Send invitation email",
@@ -1680,7 +1769,7 @@
       },
       "put": {
         "summary": "Update a component",
-        "description": "Update a specific component in master data",
+        "description": "Update a specific component in master data.",
         "operationId": "UpdateTheComponentOfAManufacturer",
         "parameters": [
           {
@@ -1730,7 +1819,7 @@
       },
       "delete": {
         "summary": "Delete a component",
-        "description": "Delete a component from master data",
+        "description": "Delete a component from master data.",
         "operationId": "DeleteAComponent",
         "parameters": [
           {
@@ -1843,6 +1932,58 @@
             "in": "body",
             "schema": {
               "$ref": "#/definitions/requestPostBulkUpsertComponents"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/responseBulkResults"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/defaultBadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/defaultNotAuthorized"
+          },
+          "403": {
+            "$ref": "#/responses/defaultForbidden"
+          },
+          "404": {
+            "$ref": "#/responses/defaultNotFound"
+          },
+          "500": {
+            "$ref": "#/responses/defaultServerError"
+          }
+        },
+        "tags": [
+          "Component"
+        ]
+      }
+    },
+    "/manufacturers/{manufacturerId}/containers/{name}/versions/{version}/components/attachments/bulkUpsert": {
+      "post": {
+        "summary": "Upsert component attachments in bulk",
+        "description": "Create or update 25 component attachments in master data.",
+        "operationId": "PostBulkUpsertComponentAttachments",
+        "parameters": [
+          {
+            "$ref": "#/parameters/pathManufacturerId"
+          },
+          {
+            "$ref": "#/parameters/pathName"
+          },
+          {
+            "$ref": "#/parameters/pathVersion"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/requestPostBulkUpsertComponentAttachments"
             },
             "required": true
           }
@@ -2960,6 +3101,148 @@
           },
           {
             "$ref": "#/parameters/pathFeatureId"
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/responses/defaultNoContent"
+          },
+          "400": {
+            "$ref": "#/responses/defaultBadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/defaultNotAuthorized"
+          },
+          "403": {
+            "$ref": "#/responses/defaultForbidden"
+          },
+          "404": {
+            "$ref": "#/responses/defaultNotFound"
+          },
+          "500": {
+            "$ref": "#/responses/defaultServerError"
+          }
+        },
+        "tags": [
+          "Component"
+        ]
+      }
+    },
+    "/manufacturers/{manufacturerId}/containers/{name}/versions/{version}/components/{componentId}/configurableProduct": {
+      "get": {
+        "summary": "Get configurable product settings",
+        "description": "Get specific configurable product settings of a component.",
+        "operationId": "GetConfigurableProduct",
+        "parameters": [
+          {
+            "$ref": "#/parameters/pathManufacturerId"
+          },
+          {
+            "$ref": "#/parameters/pathName"
+          },
+          {
+            "$ref": "#/parameters/pathVersion"
+          },
+          {
+            "$ref": "#/parameters/pathComponentId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/responseConfigurableProduct"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/defaultBadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/defaultNotAuthorized"
+          },
+          "403": {
+            "$ref": "#/responses/defaultForbidden"
+          },
+          "404": {
+            "$ref": "#/responses/defaultNotFound"
+          },
+          "500": {
+            "$ref": "#/responses/defaultServerError"
+          }
+        },
+        "tags": [
+          "Component"
+        ]
+      },
+      "put": {
+        "summary": "Update configurable product settings",
+        "description": "Update specific configurable product settings of a component.",
+        "operationId": "UpdateConfigurableProduct",
+        "parameters": [
+          {
+            "$ref": "#/parameters/pathManufacturerId"
+          },
+          {
+            "$ref": "#/parameters/pathName"
+          },
+          {
+            "$ref": "#/parameters/pathVersion"
+          },
+          {
+            "$ref": "#/parameters/pathComponentId"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/requestPutConfigurableProduct"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/responses/defaultNoContent"
+          },
+          "400": {
+            "$ref": "#/responses/defaultBadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/defaultNotAuthorized"
+          },
+          "403": {
+            "$ref": "#/responses/defaultForbidden"
+          },
+          "404": {
+            "$ref": "#/responses/defaultNotFound"
+          },
+          "500": {
+            "$ref": "#/responses/defaultServerError"
+          }
+        },
+        "tags": [
+          "Component"
+        ]
+      },
+      "delete": {
+        "summary": "Delete configurable product settings of a component",
+        "description": "Delete specific configurable product settings of a component.",
+        "operationId": "DeleteConfigurableProduct",
+        "parameters": [
+          {
+            "$ref": "#/parameters/headerContentTypeApplicationJson"
+          },
+          {
+            "$ref": "#/parameters/pathManufacturerId"
+          },
+          {
+            "$ref": "#/parameters/pathName"
+          },
+          {
+            "$ref": "#/parameters/pathVersion"
+          },
+          {
+            "$ref": "#/parameters/pathComponentId"
           }
         ],
         "responses": {
@@ -4251,6 +4534,58 @@
         ]
       }
     },
+    "/manufacturers/{manufacturerId}/containers/{name}/versions/{version}/featureGroups/bulkUpsert": {
+      "post": {
+        "summary": "Upsert feature groups in bulk",
+        "description": "Create or update 50 feature groups in master data.",
+        "operationId": "PostBulkUpsertFeatureGroups",
+        "parameters": [
+          {
+            "$ref": "#/parameters/pathManufacturerId"
+          },
+          {
+            "$ref": "#/parameters/pathName"
+          },
+          {
+            "$ref": "#/parameters/pathVersion"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/requestPostBulkUpsertFeatureGroups"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/responseBulkResults"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/defaultBadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/defaultNotAuthorized"
+          },
+          "403": {
+            "$ref": "#/responses/defaultForbidden"
+          },
+          "404": {
+            "$ref": "#/responses/defaultNotFound"
+          },
+          "500": {
+            "$ref": "#/responses/defaultServerError"
+          }
+        },
+        "tags": [
+          "Feature"
+        ]
+      }
+    },
     "/manufacturers/{manufacturerId}/containers/{name}/versions/{version}/units": {
       "get": {
         "summary": "Search units",
@@ -4985,6 +5320,55 @@
         ]
       }
     },
+    "/manufacturers/{manufacturerId}/customObjects/{customObjectType}/bulkUpsert": {
+      "post": {
+        "summary": "Upsert custom objects in bulk",
+        "description": "Create or update 50 custom objects in master data.",
+        "operationId": "PostBulkUpsertCustomObjects",
+        "parameters": [
+          {
+            "$ref": "#/parameters/pathManufacturerId"
+          },
+          {
+            "$ref": "#/parameters/pathCustomObjectType"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/requestPostBulkUpsertCustomObjects"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/responseBulkResults"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/defaultBadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/defaultNotAuthorized"
+          },
+          "403": {
+            "$ref": "#/responses/defaultForbidden"
+          },
+          "404": {
+            "$ref": "#/responses/defaultNotFound"
+          },
+          "500": {
+            "$ref": "#/responses/defaultServerError"
+          }
+        },
+        "tags": [
+          "CustomObject"
+        ]
+      }
+    },
     "/manufacturers/{manufacturerId}/resetCustomObjectUpdateTimestamp": {
       "post": {
         "summary": "Reset custom objects cache",
@@ -5483,7 +5867,7 @@
     "/manufacturers/{manufacturerId}/projects/{projectId}/addConfiguration": {
       "post": {
         "summary": "Add a configuration to a project",
-        "description": "Add a new V2 configuration to a project.",
+        "description": "Add a new configuration to a project.",
         "operationId": "AddANewConfigurationToTheProject",
         "parameters": [
           {
@@ -5497,6 +5881,52 @@
             "in": "body",
             "schema": {
               "$ref": "#/definitions/requestPostProjectAddConfiguration"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "$ref": "#/responses/defaultCreated"
+          },
+          "400": {
+            "$ref": "#/responses/defaultBadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/defaultNotAuthorized"
+          },
+          "403": {
+            "$ref": "#/responses/defaultForbidden"
+          },
+          "404": {
+            "$ref": "#/responses/defaultNotFound"
+          },
+          "500": {
+            "$ref": "#/responses/defaultServerError"
+          }
+        },
+        "tags": [
+          "Project"
+        ]
+      }
+    },
+    "/manufacturers/{manufacturerId}/projects/{projectId}/importSharedConfiguration": {
+      "post": {
+        "summary": "Import a shared configuration to a project",
+        "description": "Imports a shared configuration to the project.",
+        "operationId": "ImportSharedConfigurationToTheProject",
+        "parameters": [
+          {
+            "$ref": "#/parameters/pathManufacturerId"
+          },
+          {
+            "$ref": "#/parameters/pathProjectId"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/requestPostProjectImportSharedConfiguration"
             },
             "required": true
           }
@@ -6732,6 +7162,22 @@
           },
           {
             "in": "query",
+            "name": "includeAttributes",
+            "x-ms-summary": "Include Attributes",
+            "description": "Includes additional attribute data for the configuration and its nodes.",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "in": "query",
+            "name": "includeTableData",
+            "x-ms-summary": "Include Table Data",
+            "description": "Include additional header and row data for each repeated sub-configurator node.",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "in": "query",
             "name": "outputMode",
             "x-ms-summary": "Output Mode",
             "description": "Control the output structure of the configuration.",
@@ -6780,6 +7226,48 @@
         "tags": [
           "Configuration"
         ]
+      },
+      "delete": {
+        "summary": "Delete a configuration",
+        "description": "Delete a specific configuration of a manufacturer.",
+        "operationId": "DeleteASpecificConfiguration",
+        "parameters": [
+          {
+            "$ref": "#/parameters/pathManufacturerId"
+          },
+          {
+            "$ref": "#/parameters/pathConfigurationId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/responseGetConfiguration"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/defaultBadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/defaultNotAuthorized"
+          },
+          "403": {
+            "$ref": "#/responses/defaultForbidden"
+          },
+          "404": {
+            "$ref": "#/responses/defaultNotFound"
+          },
+          "405": {
+            "$ref": "#/responses/defaultMethodNotAllowed"
+          },
+          "500": {
+            "$ref": "#/responses/defaultServerError"
+          }
+        },
+        "tags": [
+          "Configuration"
+        ]
       }
     },
     "/manufacturers/{manufacturerId}/configurations/{configurationId}/renderImage": {
@@ -6813,6 +7301,9 @@
           },
           "404": {
             "$ref": "#/responses/defaultNotFound"
+          },
+          "405": {
+            "$ref": "#/responses/defaultMethodNotAllowed"
           },
           "500": {
             "$ref": "#/responses/defaultServerError"
@@ -6859,6 +7350,9 @@
           },
           "404": {
             "$ref": "#/responses/defaultNotFound"
+          },
+          "405": {
+            "$ref": "#/responses/defaultMethodNotAllowed"
           },
           "500": {
             "$ref": "#/responses/defaultServerError"
@@ -9312,7 +9806,7 @@
       },
       "description": "A link to a project."
     },
-    "componentExtensionsDeprecatedV1": {
+    "componentExtensions": {
       "type": "object",
       "properties": {
         "feature": {
@@ -9383,6 +9877,9 @@
           "items": {
             "$ref": "#/definitions/requestComponentQuantity"
           }
+        },
+        "configurableProduct": {
+          "$ref": "#/definitions/requestPutConfigurableProduct"
         }
       },
       "description": "Manage relations between a component and other Hive resources. Not including the extensions or underlying properties will not cause existing relations to be removed, this needs to be specified explicitly with an empty list."
@@ -9695,6 +10192,17 @@
       },
       "description": "The advanced info about a company."
     },
+    "companyChannelSettings": {
+      "type": "object",
+      "title": "channelSettings",
+      "description": "Channel setting for the company that belongs to it. If this object is set to null or omitted from the request, the existing channel settings will remain unchanged.",
+      "properties": {
+        "channelId": {
+          "type": "string",
+          "description": "ID of the channel to assign to the company. The company will be assigned to the default B2B channel if channelSettings object is provided without a channelId."
+        }
+      }
+    },
     "companySalesConditions": {
       "type": "object",
       "properties": {
@@ -9787,6 +10295,25 @@
         }
       },
       "description": "The default project settings of the company."
+    },
+    "responseCompanyChannelSettings": {
+      "type": "object",
+      "description": "Channel settings of the company.",
+      "properties": {
+        "channel": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Id of the channel the company is linked to."
+            },
+            "name": {
+              "type": "string",
+              "description": "Name of the channel the company is linked to."
+            }
+          }
+        }
+      }
     },
     "defaultObjectCreatedResponse": {
       "type": "object",
@@ -10242,6 +10769,93 @@
       ],
       "description": "General info about the contact."
     },
+    "requestPostBulkUpsertContacts": {
+      "type": "object",
+      "properties": {
+        "integratedSystemName": {
+          "type": "string",
+          "description": "Optional integrated system name used to create integrated system links for your contacts."
+        },
+        "contacts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "itemId": {
+                "type": "string",
+                "description": "A custom identifier of this item that must be unique within the entire request. This is not the contact ID."
+              },
+              "contactId": {
+                "type": "string",
+                "description": "The ID of the contact. Include for contact update only."
+              },
+              "companyId": {
+                "type": "string",
+                "description": "ID of the company in which the contact should be created."
+              },
+              "firstName": {
+                "type": "string"
+              },
+              "lastName": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string",
+                "format": "email"
+              },
+              "phone": {
+                "type": "string"
+              },
+              "mobile": {
+                "type": "string"
+              },
+              "preferredLanguage": {
+                "type": "string",
+                "description": "The default language of the contact in ISO 639-1 format."
+              },
+              "functionTitle": {
+                "type": "string"
+              },
+              "salutation": {
+                "type": "string"
+              },
+              "externalSystemId": {
+                "type": "string",
+                "description": "An ID which can identify the contact in an external system. It is usually recommended to use a system link instead."
+              },
+              "avatarUrl": {
+                "type": "string",
+                "format": "uri",
+                "description": "A publicly accessible URL to an image which will be used as the avatar."
+              },
+              "roleIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "description": "ID of a role."
+                },
+                "minItems": 1,
+                "description": "IDs of all roles which should be assigned to the contact."
+              },
+              "address": {
+                "$ref": "#/definitions/address"
+              },
+              "integratedSystemId": {
+                "type": "string",
+                "description": "Optional integrated system ID used to create an integrated system link for this specific contact."
+              }
+            },
+            "required": [
+              "itemId",
+              "roleIds"
+            ]
+          }
+        }
+      },
+      "required": [
+        "contacts"
+      ]
+    },
     "distributorContactSalesConditions": {
       "type": "object",
       "properties": {
@@ -10568,7 +11182,7 @@
                 "description": "The group to which your component belongs."
               },
               "extensions": {
-                "$ref": "#/definitions/componentExtensionsDeprecatedV1"
+                "$ref": "#/definitions/componentExtensions"
               },
               "integratedSystemId": {
                 "type": "string",
@@ -10585,6 +11199,48 @@
       },
       "required": [
         "components"
+      ]
+    },
+    "requestPostBulkUpsertComponentAttachments": {
+      "type": "object",
+      "properties": {
+        "attachments": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "itemId": {
+                "type": "string",
+                "description": "A custom identifier of this item that must be unique within the entire request. This is not the component attachment ID."
+              },
+              "articleCode": {
+                "type": "string",
+                "description": "The article code of component."
+              },
+              "fileName": {
+                "type": "string",
+                "description": "Name of the file."
+              },
+              "attachment": {
+                "type": "string",
+                "description": "Base64-encoded attachment content."
+              },
+              "isImage": {
+                "type": "boolean",
+                "description": "Flag indicating whether the attachment is an image."
+              }
+            },
+            "required": [
+              "articleCode",
+              "itemId",
+              "fileName",
+              "attachment"
+            ]
+          }
+        }
+      },
+      "required": [
+        "attachments"
       ]
     },
     "requestPostBulkUpsertComponentPrices": {
@@ -10640,6 +11296,36 @@
         }
       }
     },
+    "requestPutConfigurableProduct": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Enable or disable the configurable product."
+        },
+        "configuratorId": {
+          "type": "string",
+          "description": "Id of the configurator that configurable product is linked to"
+        },
+        "parameters": {
+          "type": "array",
+          "description": "List of parameters associated with the configuration",
+          "items": {
+            "type": "object",
+            "properties": {
+              "uniqueLabel": {
+                "type": "string",
+                "description": "The unique key identifier for the parameter"
+              },
+              "value": {
+                "type": "string",
+                "description": "The value assigned to the unique label"
+              }
+            }
+          }
+        }
+      }
+    },
     "requestPostComponent": {
       "type": "object",
       "properties": {
@@ -10670,7 +11356,7 @@
           "description": "The group to which your component belongs."
         },
         "extensions": {
-          "$ref": "#/definitions/componentExtensionsDeprecatedV1"
+          "$ref": "#/definitions/componentExtensions"
         },
         "integratedSystemLink": {
           "$ref": "#/definitions/requestBasicIntegratedSystemLink"
@@ -10711,7 +11397,7 @@
           "description": "The group to which your component belongs."
         },
         "extensions": {
-          "$ref": "#/definitions/componentExtensionsDeprecatedV1"
+          "$ref": "#/definitions/componentExtensions"
         }
       },
       "required": [
@@ -10837,6 +11523,41 @@
       },
       "required": [
         "properties"
+      ]
+    },
+    "requestPostBulkUpsertCustomObjects": {
+      "type": "object",
+      "properties": {
+        "customObjects": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "itemId": {
+                "type": "string",
+                "description": "A custom identifier of this item that must be unique within the entire request. This is not the custom object ID."
+              },
+              "objectKey": {
+                "type": "string",
+                "description": "ID of the custom object."
+              },
+              "keyValues": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/customObjectKeyValuePair"
+                },
+                "description": "Key value pairs to store inside the custom object."
+              }
+            },
+            "required": [
+              "itemId",
+              "keyValues"
+            ]
+          }
+        }
+      },
+      "required": [
+        "customObjects"
       ]
     },
     "requestPostBulkUpsertCategories": {
@@ -10965,6 +11686,46 @@
         "features"
       ]
     },
+    "requestPostBulkUpsertFeatureGroups": {
+      "type": "object",
+      "properties": {
+        "integratedSystemName": {
+          "type": "string",
+          "description": "Optional integrated system name used to create integrated system links for your features groups."
+        },
+        "featureGroups": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "itemId": {
+                "type": "string",
+                "description": "A custom identifier of this item that must be unique within the entire request. This is not the feature group ID."
+              },
+              "code": {
+                "type": "string",
+                "description": "Unique code for the feature group."
+              },
+              "descriptions": {
+                "$ref": "#/definitions/requestTranslations"
+              },
+              "integratedSystemId": {
+                "type": "string",
+                "description": "Optional integrated system ID used to create an integrated system link for this feature group."
+              }
+            },
+            "required": [
+              "itemId",
+              "code",
+              "descriptions"
+            ]
+          }
+        }
+      },
+      "required": [
+        "featureGroups"
+      ]
+    },
     "requestPostChangeFeatureGroup": {
       "type": "object",
       "properties": {
@@ -11074,6 +11835,68 @@
       "required": [
         "name"
       ]
+    },
+    "requestBulkCreateInvites": {
+      "type": "object",
+      "properties": {
+        "invites": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "itemId": {
+                "type": "string",
+                "description": "A custom identifier of this item. It is not the invite ID."
+              },
+              "forContact": {
+                "type": "object",
+                "properties": {
+                  "contactId": {
+                    "type": "string",
+                    "description": "ID of the contact."
+                  },
+                  "integratedSystemName": {
+                    "type": "string",
+                    "description": "Name of an external system where the contact is known. This must be used together with integratedSystemId."
+                  },
+                  "integratedSystemId": {
+                    "type": "string",
+                    "description": "ID of the contact in the external system. This must be used together with integratedSystemName."
+                  }
+                },
+                "description": "The contact to invite."
+              },
+              "fromContact": {
+                "type": "object",
+                "properties": {
+                  "contactId": {
+                    "type": "string",
+                    "description": "ID of the contact."
+                  },
+                  "integratedSystemName": {
+                    "type": "string",
+                    "description": "Name of an external system where the contact is known. This must be used together with integratedSystemId."
+                  },
+                  "integratedSystemId": {
+                    "type": "string",
+                    "description": "ID of the contact in the external system. This must be used together with integratedSystemName."
+                  }
+                },
+                "description": "The contact sending the invite."
+              },
+              "enableSSO": {
+                "type": "boolean",
+                "default": false,
+                "description": "Enable Single-Sign-On for this contact."
+              }
+            },
+            "required": [
+              "fromContact",
+              "forContact"
+            ]
+          }
+        }
+      }
     },
     "requestPostInvite": {
       "type": "object",
@@ -11299,6 +12122,9 @@
             "distributorId"
           ]
         },
+        "channelSettings": {
+          "$ref": "#/definitions/companyChannelSettings"
+        },
         "integratedSystemLink": {
           "$ref": "#/definitions/requestBasicIntegratedSystemLink"
         }
@@ -11339,6 +12165,9 @@
               "description": "E-mail address which will be used to send out order e-mails to sub-distributors."
             }
           }
+        },
+        "channelSettings": {
+          "$ref": "#/definitions/companyChannelSettings"
         }
       },
       "required": [
@@ -11727,6 +12556,30 @@
         "configuratorId"
       ]
     },
+    "requestPostProjectImportSharedConfiguration": {
+      "type": "object",
+      "properties": {
+        "shareCode": {
+          "type": "string",
+          "description": "Share code from a shared configuration from which a new configuration will be created."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the configuration."
+        },
+        "quantity": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The quantity of this configuration to be added."
+        },
+        "integratedSystemLink": {
+          "$ref": "#/definitions/requestBasicIntegratedSystemLink"
+        }
+      },
+      "required": [
+        "shareCode"
+      ]
+    },
     "requestPostProjectGenerateOutputDocument": {
       "type": "object",
       "properties": {
@@ -12070,6 +12923,36 @@
             "type": "string"
           },
           "description": "Optional identifiers which can be used to identify the configuration in external systems."
+        },
+        "price": {
+          "type": "object",
+          "description": "Update any price related data on the item. To retain existing data you can omit the price block entirely.",
+          "properties": {
+            "listPrice": {
+              "type": "number",
+              "description": "The list price."
+            },
+            "purchasePrice": {
+              "type": "number",
+              "description": "The purchase price."
+            },
+            "subDistributorPurchasePrice": {
+              "type": "number",
+              "description": "The subdistributor purchase price."
+            },
+            "salesPrice": {
+              "type": "number",
+              "description": "The sales price."
+            },
+            "currency": {
+              "type": "string",
+              "description": "The currency in ISO 4217 format."
+            },
+            "unitCode": {
+              "type": "string",
+              "description": "The unique code of a unit."
+            }
+          }
         }
       },
       "required": [
@@ -12572,6 +13455,10 @@
           "type": "string",
           "description": "ID of the container version to which the master data in the configuration belongs."
         },
+        "channelId": {
+          "type": "string",
+          "description": "ID of the channel to which the configuration should belong."
+        },
         "initialValues": {
           "type": "array",
           "description": "The input values used to initialize the configuration.",
@@ -12793,12 +13680,72 @@
         "descriptions": {
           "$ref": "#/definitions/responseKeyValueTranslations"
         },
+        "attributes": {
+          "type": "object",
+          "description": "An object containing attribute labels and values of the node."
+        },
         "nodes": {
           "type": "array",
           "items": {
             "type": "object"
           },
           "description": "Child nodes of the parent node, the node structures are the same. Nested nodes are not available for the DEFAULT output mode."
+        },
+        "table": {
+          "type": "object",
+          "properties": {
+            "headers": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "description": "The component code of the node shown as table column."
+                  },
+                  "uniqueLabel": {
+                    "type": "string",
+                    "description": "The unique label of the node shown as table column."
+                  }
+                },
+                "description": "A column header."
+              },
+              "description": "A list representing the headers of the table."
+            },
+            "rows": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "Configuration ID of the row."
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "value": {
+                          "type": "object",
+                          "description": "The value of the cell."
+                        },
+                        "quantity": {
+                          "type": "number",
+                          "description": "The quantity of the cell."
+                        }
+                      },
+                      "description": "A cell with values for its related header"
+                    },
+                    "description": "A list of cells with values for their related header."
+                  }
+                },
+                "description": "A row."
+              },
+              "description": "A list representing the rows of the table."
+            }
+          },
+          "description": "The row and header data for any nested repeated sub-configurators."
         }
       }
     },
@@ -12980,6 +13927,9 @@
         },
         "defaultProjectSettings": {
           "$ref": "#/definitions/companyDefaultProjectSettings"
+        },
+        "channelSettings": {
+          "$ref": "#/definitions/responseCompanyChannelSettings"
         }
       }
     },
@@ -13484,6 +14434,37 @@
             "$ref": "#/definitions/featureLink"
           },
           "description": "A list of features linked to the component."
+        }
+      }
+    },
+    "responseConfigurableProduct": {
+      "description": "",
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Indicates whether configurable product is enabled"
+        },
+        "configuratorId": {
+          "type": "string",
+          "description": "Id of the configurator that configurable product is linked to"
+        },
+        "parameters": {
+          "type": "array",
+          "description": "List of parameters associated with the configuration",
+          "items": {
+            "type": "object",
+            "properties": {
+              "uniqueLabel": {
+                "type": "string",
+                "description": "The unique key identifier for the parameter"
+              },
+              "value": {
+                "type": "string",
+                "description": "The value assigned to the unique label"
+              }
+            }
+          }
         }
       }
     },
@@ -15155,6 +16136,10 @@
         "descriptions": {
           "$ref": "#/definitions/responseKeyValueTranslations"
         },
+        "attributes": {
+          "type": "object",
+          "description": "An object containing attribute labels and values of the configuration."
+        },
         "configurationStatus": {
           "$ref": "#/definitions/enumConfigurationStatus"
         },
@@ -15644,6 +16629,12 @@
     },
     "defaultNotFound": {
       "description": "Not Found",
+      "schema": {
+        "$ref": "#/definitions/responseHiveError"
+      }
+    },
+    "defaultMethodNotAllowed": {
+      "description": "Method Not Allowed",
       "schema": {
         "$ref": "#/definitions/responseHiveError"
       }
