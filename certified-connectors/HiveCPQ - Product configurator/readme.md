@@ -2,7 +2,7 @@
 Hive CPQ is a comprehensive Configure Price Quote (CPQ) solution that empowers sales teams to generate accurate quotes for complex products. Streamline your sales process by seamlessly integrating Hive CPQ to automate workflows, sync data, and optimize your operations using our connector. Maximize efficiency and deliver exceptional sales experiences with Hive CPQ's powerful connector.
 
 ## Publisher: Publisher's Name
-NimbleOps NV
+Hive CPQ
 
 ## Prerequisites
 You have to
@@ -53,6 +53,7 @@ You have to
 * Update a component tooltip image: Update a specific component tooltip image in master data.
 * Delete a component tooltip image: Delete a component tooltip image from master data.
 * Render a configuration screenshot: Render a screenshot of a configuration.
+* Render configuration screenshots: Render screenshots of a configuration for one or more perspectives.
 * Search component prices: Search prices of a component in master data.
 * Add a component price: Add a new price to a component in master data.
 * Delete a component price: Delete a price from a component in master data.
@@ -116,6 +117,8 @@ You have to
 * Cancel order process of a project segment: Cancel the order process and move a project segment back to step 2.
 * Change the settings of a project segment: Change the settings of a project segment. Settings are only available if a segment configurator is configured.
 * Add a configuration to a segment: Add a V1 configuration to a specific project segment.
+* Generate a PDF order summary for a project segment: Generate a PDF order summary document for a specific project segment.
+* Generate a Word order summary for a project segment: Generate a Microsoft Word order summary document for a specific project segment.
 * Search project segment items: Search project segment items of a specific manufacturer.
 * Get project segment item: Get a specific project segment item of a manufacturer.
 * Delete a project segment item: Delete a specific project segment item from a project.
@@ -172,7 +175,7 @@ You have to
 * Search tax conditions: Search tax conditions of a manufacturer.
 
 ## Obtaining Credentials
-A request needs to be made to support@Hive CPQ.com requesting API credentials in the form of a username & password.
+A request needs to be made to support@hivecpq.com requesting API credentials in the form of a username & password.
 In case of a custom installation you also need to request your own client ID and secret.
 
 ## Known issues and limitations
