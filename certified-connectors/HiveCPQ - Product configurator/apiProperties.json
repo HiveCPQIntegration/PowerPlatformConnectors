@@ -41,7 +41,7 @@
         }
       }
     },
-    "iconBrandColor": "#13A0D5",
+    "iconBrandColor": "#15181D",
     "capabilities": [ "actions" ],
     "publisher": "Hive CPQ",
     "stackOwner": "Hive CPQ"

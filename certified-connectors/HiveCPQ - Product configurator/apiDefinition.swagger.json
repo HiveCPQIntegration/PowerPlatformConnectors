@@ -1967,7 +1967,7 @@
     "/manufacturers/{manufacturerId}/containers/{name}/versions/{version}/components/attachments/bulkUpsert": {
       "post": {
         "summary": "Upsert component attachments in bulk",
-        "description": "Create or update 25 component attachments in master data.",
+        "description": "Create or update 25 component attachments in master data, with a maximum request body of 75 MiB.",
         "operationId": "PostBulkUpsertComponentAttachments",
         "parameters": [
           {
@@ -2006,6 +2006,9 @@
           },
           "404": {
             "$ref": "#/responses/defaultNotFound"
+          },
+          "413": {
+            "$ref": "#/responses/defaultContentTooLarge"
           },
           "500": {
             "$ref": "#/responses/defaultServerError"
@@ -3706,6 +3709,61 @@
         ]
       }
     },
+    "/manufacturers/{manufacturerId}/containers/{name}/versions/{version}/categories/attachments/bulkUpsert": {
+      "post": {
+        "summary": "Upsert category attachments in bulk",
+        "description": "Create or update 25 category attachments in master data, with a maximum request body of 75 MiB.",
+        "operationId": "PostBulkUpsertCategoryAttachments",
+        "parameters": [
+          {
+            "$ref": "#/parameters/pathManufacturerId"
+          },
+          {
+            "$ref": "#/parameters/pathName"
+          },
+          {
+            "$ref": "#/parameters/pathVersion"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/requestPostBulkUpsertCategoryAttachments"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/responseBulkResults"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/defaultBadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/defaultNotAuthorized"
+          },
+          "403": {
+            "$ref": "#/responses/defaultForbidden"
+          },
+          "404": {
+            "$ref": "#/responses/defaultNotFound"
+          },
+          "413": {
+            "$ref": "#/responses/defaultContentTooLarge"
+          },
+          "500": {
+            "$ref": "#/responses/defaultServerError"
+          }
+        },
+        "tags": [
+          "Category"
+        ]
+      }
+    },
     "/manufacturers/{manufacturerId}/containers/{name}/versions/{version}/featureGroups": {
       "get": {
         "summary": "Search feature groups",
@@ -4972,6 +5030,53 @@
             "schema": {
               "$ref": "#/definitions/responseGetConfigurators"
             }
+          },
+          "400": {
+            "$ref": "#/responses/defaultBadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/defaultNotAuthorized"
+          },
+          "403": {
+            "$ref": "#/responses/defaultForbidden"
+          },
+          "404": {
+            "$ref": "#/responses/defaultNotFound"
+          },
+          "500": {
+            "$ref": "#/responses/defaultServerError"
+          }
+        },
+        "tags": [
+          "Configurator"
+        ]
+      },
+      "post": {
+        "summary": "Add new configurator",
+        "description": "Add a new configurator to a version.",
+        "operationId": "AddNewConfigurator",
+        "parameters": [
+          {
+            "$ref": "#/parameters/pathManufacturerId"
+          },
+          {
+            "$ref": "#/parameters/pathName"
+          },
+          {
+            "$ref": "#/parameters/pathVersion"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/requestPostConfigurator"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "$ref": "#/responses/defaultCreated"
           },
           "400": {
             "$ref": "#/responses/defaultBadRequest"
@@ -6826,6 +6931,113 @@
         ]
       }
     },
+    "/manufacturers/{manufacturerId}/projectSegments/{projectSegmentId}/outputDocuments/generateOrderSummaryAsPdf": {
+      "post": {
+        "summary": "Generate a PDF order summary for a project segment",
+        "description": "Generate a PDF order summary document for a specific project segment.",
+        "operationId": "GenerateTheOrderSummaryPdfForAProjectSegment",
+        "produces": [
+          "application/json",
+          "application/octet-stream",
+          "application/pdf"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/pathManufacturerId"
+          },
+          {
+            "$ref": "#/parameters/pathProjectSegmentId"
+          },
+          {
+            "$ref": "#/parameters/headerAcceptWildcard"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/requestPostSegmentGenerateOrderSummary"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/defaultFile"
+          },
+          "400": {
+            "$ref": "#/responses/defaultBadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/defaultNotAuthorized"
+          },
+          "403": {
+            "$ref": "#/responses/defaultForbidden"
+          },
+          "404": {
+            "$ref": "#/responses/defaultNotFound"
+          },
+          "500": {
+            "$ref": "#/responses/defaultServerError"
+          }
+        },
+        "tags": [
+          "ProjectSegment"
+        ]
+      }
+    },
+    "/manufacturers/{manufacturerId}/projectSegments/{projectSegmentId}/outputDocuments/generateOrderSummaryAsWord": {
+      "post": {
+        "summary": "Generate a Word order summary for a project segment",
+        "description": "Generate a Microsoft Word order summary document for a specific project segment.",
+        "operationId": "GenerateTheOrderSummaryWordForAProjectSegment",
+        "produces": [
+          "application/json",
+          "application/octet-stream"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/pathManufacturerId"
+          },
+          {
+            "$ref": "#/parameters/pathProjectSegmentId"
+          },
+          {
+            "$ref": "#/parameters/headerAcceptWildcard"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/requestPostSegmentGenerateOrderSummary"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/defaultFile"
+          },
+          "400": {
+            "$ref": "#/responses/defaultBadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/defaultNotAuthorized"
+          },
+          "403": {
+            "$ref": "#/responses/defaultForbidden"
+          },
+          "404": {
+            "$ref": "#/responses/defaultNotFound"
+          },
+          "500": {
+            "$ref": "#/responses/defaultServerError"
+          }
+        },
+        "tags": [
+          "ProjectSegment"
+        ]
+      }
+    },
     "/manufacturers/{manufacturerId}/projectSegmentItems": {
       "get": {
         "summary": "Search project segment items",
@@ -7047,6 +7259,52 @@
         "responses": {
           "201": {
             "$ref": "#/responses/defaultCreated"
+          },
+          "400": {
+            "$ref": "#/responses/defaultBadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/defaultNotAuthorized"
+          },
+          "403": {
+            "$ref": "#/responses/defaultForbidden"
+          },
+          "404": {
+            "$ref": "#/responses/defaultNotFound"
+          },
+          "500": {
+            "$ref": "#/responses/defaultServerError"
+          }
+        },
+        "tags": [
+          "ProjectSegmentItem"
+        ]
+      }
+    },
+    "/manufacturers/{manufacturerId}/projectSegmentItems/{projectSegmentItemId}/copy": {
+      "post": {
+        "summary": "Copy a project segment item within the same project",
+        "description": "Creates an in-project copy of an existing project segment item. The copy is created under the same project segment as the source item.",
+        "operationId": "PostProjectSegmentItemsCopy",
+        "parameters": [
+          {
+            "$ref": "#/parameters/pathManufacturerId"
+          },
+          {
+            "$ref": "#/parameters/pathProjectSegmentItemId"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/requestPostProjectSegmentItemCopy"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "$ref": "#/responses/projectSegmentItemCopied"
           },
           "400": {
             "$ref": "#/responses/defaultBadRequest"
@@ -7314,6 +7572,58 @@
         ]
       }
     },
+    "/manufacturers/{manufacturerId}/configurations/{configurationId}/renderImages": {
+      "post": {
+        "summary": "Render configuration screenshots",
+        "description": "Render screenshots of a configuration for one or more perspectives.",
+        "operationId": "RenderConfigurationScreenshots",
+        "parameters": [
+          {
+            "$ref": "#/parameters/pathManufacturerId"
+          },
+          {
+            "$ref": "#/parameters/pathConfigurationId"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/requestPostRenderImages"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/responseRenderImages"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/defaultBadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/defaultNotAuthorized"
+          },
+          "403": {
+            "$ref": "#/responses/defaultForbidden"
+          },
+          "404": {
+            "$ref": "#/responses/defaultNotFound"
+          },
+          "405": {
+            "$ref": "#/responses/defaultMethodNotAllowed"
+          },
+          "500": {
+            "$ref": "#/responses/defaultServerError"
+          }
+        },
+        "tags": [
+          "Configuration"
+        ]
+      }
+    },
     "/manufacturers/{manufacturerId}/configurations/{configurationId}/checkConfiguration": {
       "post": {
         "summary": "Update configuration",
@@ -7508,24 +7818,28 @@
         ],
         "responses": {
           "201": {
-            "description": "201",
+            "description": "Created",
             "schema": {
               "type": "object",
               "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "Unique Hive ID of the created integrated system link."
+                },
                 "integratedSystemName": {
                   "type": "string",
-                  "description": "integratedSystemName"
+                  "description": "Name of the integrated system."
                 },
                 "integratedSystemId": {
                   "type": "string",
-                  "description": "integratedSystemId"
+                  "description": "ID of the resource in the integrated system."
                 },
                 "resourceType": {
                   "$ref": "#/definitions/enumSystemLinkResourceType"
                 },
                 "hiveId": {
                   "type": "string",
-                  "description": "hiveId"
+                  "description": "ID of the linked Hive resource."
                 }
               }
             }
@@ -9316,7 +9630,9 @@
               "PROJECT_SEGMENT_ITEM_UPGRADED",
               "PROJECT_SEGMENT_MOVEDTOSTEP1",
               "PROJECT_SEGMENT_MOVEDTOSTEP2",
-              "PROJECT_COPIED"
+              "PROJECT_COPIED",
+              "PROJECT_REMOVED",
+              "USER_LANGUAGE_CHANGED"
             ]
           },
           {
@@ -9931,9 +10247,13 @@
           "type": "string",
           "description": "Code of the product store article."
         },
-        "ConfiguratorCode": {
+        "configuratorCode": {
           "type": "string",
           "description": "Code of the configurable item configurator."
+        },
+        "productGroup": {
+          "type": "string",
+          "description": "Group of the item."
         },
         "type": {
           "$ref": "#/definitions/enumProjectSegmentItemType"
@@ -10472,7 +10792,7 @@
       "description": "Type of the output document template.",
       "enum": [
         "QUOTE",
-        "ORDER",
+        "ORDER_SUMMARY",
         "CALCULATION"
       ]
     },
@@ -10878,6 +11198,16 @@
       },
       "description": "Sales conditions of the contact."
     },
+    "distributorContactAdvanced": {
+      "type": "object",
+      "description": "Advanced properties of the contact.",
+      "properties": {
+        "externalSystemId": {
+          "type": "string",
+          "description": "Identifier for this contact in an external system."
+        }
+      }
+    },
     "requestPostCopyToVersion": {
       "type": "object",
       "properties": {
@@ -11243,6 +11573,48 @@
         "attachments"
       ]
     },
+    "requestPostBulkUpsertCategoryAttachments": {
+      "type": "object",
+      "properties": {
+        "attachments": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "itemId": {
+                "type": "string",
+                "description": "A custom identifier of this item that must be unique within the entire request. This is not the category attachment ID."
+              },
+              "mainCategoryCode": {
+                "type": "string",
+                "description": "Code of the existing main category."
+              },
+              "fileName": {
+                "type": "string",
+                "description": "Name of the file."
+              },
+              "attachment": {
+                "type": "string",
+                "description": "Base64-encoded attachment content."
+              },
+              "isImage": {
+                "type": "boolean",
+                "description": "Flag indicating whether the attachment is an image."
+              }
+            },
+            "required": [
+              "mainCategoryCode",
+              "itemId",
+              "fileName",
+              "attachment"
+            ]
+          }
+        }
+      },
+      "required": [
+        "attachments"
+      ]
+    },
     "requestPostBulkUpsertComponentPrices": {
       "type": "object",
       "properties": {
@@ -11448,7 +11820,7 @@
         "code": {
           "type": "string",
           "maxLength": 150,
-          "description": "Unique code for the property."
+          "description": "Unique code for the property. Spaces, . and $ are replaced with _."
         },
         "type": {
           "$ref": "#/definitions/enumComponentPropertyType"
@@ -11496,7 +11868,7 @@
               },
               "code": {
                 "type": "string",
-                "description": "Unique code for the property."
+                "description": "Unique code for the property. Spaces, . and $ are replaced with _."
               },
               "type": {
                 "$ref": "#/definitions/enumComponentPropertyType"
@@ -11551,6 +11923,7 @@
             },
             "required": [
               "itemId",
+              "objectKey",
               "keyValues"
             ]
           }
@@ -12202,7 +12575,7 @@
         },
         "vatNumber": {
           "type": "string",
-          "description": "VAT number to be used for the default invoice company."
+          "description": "Required for non-US INVOICE addresses. Ignored for DELIVERY."
         },
         "canChangeAddress": {
           "type": "boolean",
@@ -12255,7 +12628,7 @@
         },
         "vatNumber": {
           "type": "string",
-          "description": "VAT number to be used for the default invoice company."
+          "description": "Required for non-US INVOICE addresses. Ignored for DELIVERY."
         },
         "canChangeAddress": {
           "type": "boolean",
@@ -12599,6 +12972,18 @@
         "language"
       ]
     },
+    "requestPostSegmentGenerateOrderSummary": {
+      "type": "object",
+      "properties": {
+        "language": {
+          "type": "string",
+          "description": "The ISO 639-1 language code the document should be generated in."
+        }
+      },
+      "required": [
+        "language"
+      ]
+    },
     "requestPostProjectCopy": {
       "type": "object",
       "properties": {
@@ -12755,6 +13140,10 @@
         },
         "invoice": {
           "$ref": "#/definitions/companyContact"
+        },
+        "productGroup": {
+          "type": "string",
+          "description": "Product group of the items to order. Requires the API_ORDER_BY_PRODUCT_GROUP system parameter. When blank, only items without a product group are ordered, unless the segment holds one product group or none."
         }
       },
       "required": [
@@ -12781,6 +13170,10 @@
         },
         "invoice": {
           "$ref": "#/definitions/companyContact"
+        },
+        "productGroup": {
+          "type": "string",
+          "description": "Product group of the items to order. Requires the API_ORDER_BY_PRODUCT_GROUP system parameter. When blank, only items without a product group are ordered, unless the segment holds one product group or none. Only applies while the segment is in quotation."
         }
       },
       "required": [
@@ -12974,6 +13367,27 @@
         "projectId"
       ]
     },
+    "requestPostProjectSegmentItemCopy": {
+      "type": "object",
+      "properties": {
+        "integratedSystemLink": {
+          "$ref": "#/definitions/requestBasicIntegratedSystemLink"
+        }
+      }
+    },
+    "responsePostProjectSegmentItemCopy": {
+      "type": "object",
+      "properties": {
+        "projectSegmentItemId": {
+          "type": "string",
+          "description": "ID of the newly created project segment item."
+        },
+        "configurationId": {
+          "type": "string",
+          "description": "NoSQL configuration ID of the new item."
+        }
+      }
+    },
     "requestPostIntegratedSystemLink": {
       "type": "object",
       "properties": {
@@ -13056,6 +13470,9 @@
         },
         "salesConditions": {
           "$ref": "#/definitions/distributorContactSalesConditions"
+        },
+        "advanced": {
+          "$ref": "#/definitions/distributorContactAdvanced"
         }
       }
     },
@@ -13074,6 +13491,9 @@
         "accountId": {
           "type": "string",
           "description": "ID of the distributor account to which the contact should be added."
+        },
+        "advanced": {
+          "$ref": "#/definitions/distributorContactAdvanced"
         },
         "integratedSystemLink": {
           "$ref": "#/definitions/requestBasicIntegratedSystemLink"
@@ -13475,6 +13895,47 @@
         "initialValues"
       ]
     },
+    "requestPostRenderImages": {
+      "type": "object",
+      "required": [
+        "perspectives"
+      ],
+      "properties": {
+        "perspectives": {
+          "type": "array",
+          "description": "List of perspective names to render.",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "responseRenderImages": {
+      "type": "object",
+      "properties": {
+        "perspectives": {
+          "type": "array",
+          "description": "The render results.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "The perspective name."
+              },
+              "url": {
+                "type": "string",
+                "description": "URL of the rendered image."
+              },
+              "error": {
+                "type": "string",
+                "description": "Error message when rendering failed."
+              }
+            }
+          }
+        }
+      }
+    },
     "requestPostCheckConfiguration": {
       "type": "object",
       "properties": {
@@ -13733,6 +14194,10 @@
                         "quantity": {
                           "type": "number",
                           "description": "The quantity of the cell."
+                        },
+                        "unit": {
+                          "type": "string",
+                          "description": "The unit of the cell quantity."
                         }
                       },
                       "description": "A cell with values for its related header"
@@ -13886,7 +14351,7 @@
           "type": "string",
           "description": "ID of the company."
         },
-        "type": {
+        "companyType": {
           "$ref": "#/definitions/enumCompanyType"
         },
         "externalLinks": {
@@ -14796,6 +15261,22 @@
         }
       }
     },
+    "requestPostConfigurator": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "Unique code of the configurator within the container version."
+        },
+        "name": {
+          "$ref": "#/definitions/requestTranslations"
+        }
+      },
+      "required": [
+        "code",
+        "name"
+      ]
+    },
     "responseGetConfigurators": {
       "type": "object",
       "properties": {
@@ -15409,6 +15890,9 @@
               },
               "salesConditions": {
                 "$ref": "#/definitions/distributorContactSalesConditions"
+              },
+              "advanced": {
+                "$ref": "#/definitions/distributorContactAdvanced"
               },
               "externalLinks": {
                 "$ref": "#/definitions/externalLinks"
@@ -16609,6 +17093,12 @@
         "$ref": "#/definitions/defaultObjectCopiedToVersionResponse"
       }
     },
+    "projectSegmentItemCopied": {
+      "description": "The project segment item was copied successfully.",
+      "schema": {
+        "$ref": "#/definitions/responsePostProjectSegmentItemCopy"
+      }
+    },
     "defaultNoContent": {
       "description": "No Content"
     },
@@ -16641,6 +17131,12 @@
     },
     "defaultConflict": {
       "description": "Conflict",
+      "schema": {
+        "$ref": "#/definitions/responseHiveError"
+      }
+    },
+    "defaultContentTooLarge": {
+      "description": "Content Too Large",
       "schema": {
         "$ref": "#/definitions/responseHiveError"
       }
